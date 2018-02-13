@@ -1,0 +1,26 @@
+'''
+Write a python function, find_pairs_of_numbers() which accepts a list of positive integers with no repetitions and returns count of pairs of numbers in the list that adds up to n. The function should return 0, if no such pairs are found in the list.
+
+
+'''
+
+#PF-Assgn-34
+from _ast import Num
+def find_pairs_of_numbers(num_list,n):
+    count=0
+    temp = []
+
+    for i in range(len(num_list)):
+
+        for j in range(len(num_list)):
+
+            if((num_list[i]+num_list[j])==n and i!=j and num_list[i] not in temp and num_list[j] not in temp):
+                count+=1
+                temp.append(num_list[i])
+                temp.append(num_list[j])
+    return count
+                
+
+num_list=[4,5,2,3,1,0,6,7,8]
+n=8
+print(find_pairs_of_numbers(num_list,n))
