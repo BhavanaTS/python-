@@ -1,0 +1,56 @@
+A vendor at a food court is in the process of automating his order management system.
+The vendor serves the following menu – Veg Roll, Noodles, Fried Rice and Soup and also maintains the quantity available for each item. The customer can order any combination of items. The customer is provided the item if the requested quantity of item is available with the vendor.
+
+
+Write a python program which implements the following functions.
+place_order(*item_tuple): This function accepts the order placed by the customer. Consider it to be a variable length argument as each customer may have a different order.
+The function should check whether the items requested are present in the vendor’s menu and if so, it should check whether the requested quantity is available for each 
+
+
+The function should display appropriate messages for each item in the order for the below scenarios:
+
+When the requested item is not available in vendor’s menu, display <Item Name> is not available
+When the quantity requested by the customer is not available, display <Item Name> stock is over
+When the requested quantity of the item is available with the vendor, display <Item Name> is available
+
+
+
+
+#PF-Assgn-39
+
+#Global variables
+menu=('Veg Roll','Noodles','Fried Rice','Soup')
+quantity_available=[2,200,250,3]
+
+'''This method accepts the item followed by the quantity required by a customer in the format item1, quantity_required, item2, quantity_required etc.'''
+def place_order(*item_tuple):
+    food=[]
+    quantity=[]
+    for i in range(0,len(item_tuple),2):
+        food.append(item_tuple[i])
+    for i in range(1,len(item_tuple),2):
+        quantity.append(item_tuple[i])
+    menu_dic=dict(zip(menu,quantity_available))
+    order_dic=dict(zip(food, quantity))
+                
+    for i in food:
+        if i in menu:
+            if order_dic[i]<=menu_dic[i]:
+                print(i+" is available")
+                menu_dic.update({i:(menu_dic[i]-order_dic[i])})
+#	        if menu_dic[i]<0:
+#                    menu_dic.update({i:0})
+#                    print(i+" stock is over")
+            else:
+                print(i+" stock is over")
+        else:
+            print(i+" is not available")
+                
+                
+    print(menu_dic)
+     
+
+
+
+#Provide different values for items ordered and test your program
+place_order("Veg Roll",2,"Noodles",2)

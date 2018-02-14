@@ -1,0 +1,40 @@
+'''
+write a python function, encrypt_sentence() which accepts a message and encrypts it based on rules given below and returns the encrypted message.
+Words at odd position -> Reverse It
+Words at even position -> Rearrange the characters so that all consonants appear before the vowels and their order should not change
+
+Note: 
+
+Assume that the sentence would begin with a word and there will be only a single space between the words.
+Perform case sensitive string operations wherever necessary.
+Also write the pytest test cases to test the program.
+
+Sample Input			Expected Output
+the sun rises in the east	eht snu sesir ni eht stea
+'''
+
+#PF-Assgn-47
+def encrypt_sentence(sentence):
+    str1=sentence.split(" ")
+    x=[]
+    vowels= ['a','e','i','o','u']
+    for i in range(0,len(str1),2):
+        str1[i]=str1[i][::-1]
+    
+    for i in range(1,len(str1),2):
+
+            t = list(str1[i])
+            t.sort(key=lambda x: x in vowels)
+            x.append("".join(t))
+    
+    
+    cntr =0
+    for i in range(1,len(str1),2):
+        str1[i] = x[cntr]
+        cntr+=1
+        
+    return " ".join(str1)
+
+sentence="the sun rise in the east"
+encrypted_sentence=encrypt_sentence(sentence)
+print(encrypted_sentence)
