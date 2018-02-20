@@ -1,40 +1,53 @@
 '''
-Write python function, sms_encoding() which accepts a sentence and converts it into an abbreviated sentence to be sent as SMS and returns the abbreviated sentence. 
+Write a python function, find_correct() which accepts a dictionary and returns a list as per the rules mentioned below.
+The input dictionary will contain correct spelling of a word as key and the spelling provided by a contestant as the value.
 
-Rules are as follows: 
-a. Spaces are to be retained as is 
-b. Each word should be encoded separately
+The function should identify the degree of correctness as mentioned below:
+CORRECT, if it is an exact match
+ALMOST CORRECT, if no more than 2 letters are wrong
+WRONG, if more than 2 letters are wrong or if length (correct spelling versus spelling given by contestant) mismatches.
 
-If a word has only vowels then retain the word as is
-If a word has a consonant (at least 1) then retain only those consonants
-Sample Input					Expected Output
-I love Python					I lv Pythn
-MSD says I love cricket and tennis too		MSD sys I lv crckt nd tnns t
-I will not repeat mistakes			I wll nt rpt mstks
+and return a list containing the number of CORRECT answers, number of ALMOST CORRECT answers and number of WRONG answers. 
+Assume that the words contain only uppercase letters and the maximum word length is 10.
 
+Also write the pytest test cases to test the program.
+
+
+Sample Input												Expected Output
+{"THEIR": "THEIR", "BUSINESS": "BISINESS","WINDOWS":"WINDMILL","WERE":"WEAR","SAMPLE":"SAMPLE"}		[2, 2, 1]
 '''
+#PF-Assgn-48
 
-#PF-Assgn-50
-
-def sms_encoding(data):
-    l=data.split(" ")
-    x=[]
-    for word in l:
-        if(len(word)==1):
-            x.append(word)
-            continue
+def find_correct(word_dict):
+    correct=0
+    almost=0
+    wrong=0
+    list1=[]
+    for key,value in word_dict.items():
+        if key==value:
+            correct+=1
+        elif len(key)!=len(value):
+            wrong+=1
         else:
-            
-            for letter in word:
-                if letter in ['a','e','i','o','u','A','E','I','O','U']:
-                    word=word.replace(letter,"")
+            count=0
+            for i in key:
+                for j in value[key.index(i):]:
+                    if i==j:
+                        break
+                    else:
+                        count+=1
+                        break
                     
-                
-                else:
-                    continue
-                
-            x.append(word)   
-    return (" ".join(x))
-
-data="GOOD DAYS AND BAD DAYS"
-print(sms_encoding(data))
+                        
+            if count<=2:
+                almost+=1
+            else:
+                wrong+=1
+    list1.append(correct)
+    list1.append(almost)
+    list1.append(wrong)
+    return list1
+            
+                        
+word_dict={'THREE': 'TRICE', 'MOST': 'MICE', 'GET': 'GOT', 'COME': 'COME'}
+print(find_correct(word_dict))
